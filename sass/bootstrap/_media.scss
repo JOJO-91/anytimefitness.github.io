@@ -1,0 +1,295 @@
+.media {
+  // Proper spacing between instances of .media
+  margin-top: 15px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.media,
+.media-body {
+  zoom: 1;
+  overflow: hidden;
+}
+
+.media-body {
+  width: 10000px;
+}
+
+.media-object {
+  display: block;
+
+  // Fix collapse in webkit from max-width: 100% and display: table-cell.
+  &.img-thumbnail {
+    max-width: none;
+  }
+}
+
+.media-right,
+.media > .pull-right {
+  padding-left: 10px;
+}
+
+.media-left,
+.media > .pull-left {
+  padding-right: 10px;
+}
+
+.media-left,
+.media-right,
+.media-body {
+  display: table-cell;
+  vertical-align: top;
+}
+
+.media-middle {
+  vertical-align: middle;
+}
+
+.media-bottom {
+  vertical-align: bottom;
+}
+
+// Reset margins on headings for tighter default spacing
+.media-heading {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+// Media list variation
+//
+// Undo default ul/ol styles
+.media-list {
+  padding-left: 0;
+  list-style: none;
+}
+//
+// Grid system
+// --------------------------------------------------
+
+
+// Container widths
+//
+// Set the container width, and override it for fixed navbars in media queries.
+
+.container {
+  @include container-fixed;
+
+  @media (min-width: $screen-sm-min) {
+    width: $container-sm;
+  }
+  @media (min-width: $screen-md-min) {
+    width: $container-md;
+  }
+  @media (min-width: $screen-lg-min) {
+    width: $container-lg;
+  }
+}
+
+
+// Fluid container
+//
+// Utilizes the mixin meant for fixed width containers, but without any defined
+// width for fluid, full width layouts.
+
+.container-fluid {
+  @include container-fixed;
+}
+
+
+// Row
+//
+// Rows contain and clear the floats of your columns.
+
+.row {
+  @include make-row;
+}
+
+
+// Columns
+//
+// Common styles for small and large grid columns
+
+@include make-grid-columns;
+
+
+// Extra small grid
+//
+// Columns, offsets, pushes, and pulls for extra small devices like
+// smartphones.
+
+@include make-grid(xs);
+
+
+// Small grid
+//
+// Columns, offsets, pushes, and pulls for the small device range, from phones
+// to tablets.
+
+@media (min-width: $screen-sm-min) {
+  @include make-grid(sm);
+}
+
+
+// Medium grid
+//
+// Columns, offsets, pushes, and pulls for the desktop device range.
+
+@media (min-width: $screen-md-min) {
+  @include make-grid(md);
+}
+
+
+// Large grid
+//
+// Columns, offsets, pushes, and pulls for the large desktop device range.
+
+@media (min-width: $screen-lg-min) {
+  @include make-grid(lg);
+}
+//
+// Close icons
+// --------------------------------------------------
+
+
+.close {
+  float: right;
+  font-size: ($font-size-base * 1.5);
+  font-weight: $close-font-weight;
+  line-height: 1;
+  color: $close-color;
+  text-shadow: $close-text-shadow;
+  @include opacity(.2);
+
+  &:hover,
+  &:focus {
+    color: $close-color;
+    text-decoration: none;
+    cursor: pointer;
+    @include opacity(.5);
+  }
+
+  // [converter] extracted button& to button.close
+}
+
+// Additional properties for button version
+// iOS requires the button element instead of an anchor tag.
+// If you want the anchor version, it requires `href="#"`.
+// See https://developer.mozilla.org/en-US/docs/Web/Events/click#Safari_Mobile
+button.close {
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+}
+
+//
+// Code (inline and block)
+// --------------------------------------------------
+
+
+// Inline and block code styles
+code,
+kbd,
+pre,
+samp {
+  font-family: $font-family-monospace;
+}
+
+// Inline code
+code {
+  padding: 2px 4px;
+  font-size: 90%;
+  color: $code-color;
+  background-color: $code-bg;
+  border-radius: $border-radius-base;
+}
+
+// User input typically entered via keyboard
+kbd {
+  padding: 2px 4px;
+  font-size: 90%;
+  color: $kbd-color;
+  background-color: $kbd-bg;
+  border-radius: $border-radius-small;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.25);
+
+  kbd {
+    padding: 0;
+    font-size: 100%;
+    font-weight: bold;
+    box-shadow: none;
+  }
+}
+
+// Blocks of code
+pre {
+  display: block;
+  padding: (($line-height-computed - 1) / 2);
+  margin: 0 0 ($line-height-computed / 2);
+  font-size: ($font-size-base - 1); // 14px to 13px
+  line-height: $line-height-base;
+  word-break: break-all;
+  word-wrap: break-word;
+  color: $pre-color;
+  background-color: $pre-bg;
+  border: 1px solid $pre-border-color;
+  border-radius: $border-radius-base;
+
+  // Account for some code outputs that place code tags in pre tags
+  code {
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+    white-space: pre-wrap;
+    background-color: transparent;
+    border-radius: 0;
+  }
+}
+
+// Enable scrollable blocks of code
+.pre-scrollable {
+  max-height: $pre-scrollable-max-height;
+  overflow-y: scroll;
+}
+
+//
+// Component animations
+// --------------------------------------------------
+
+// Heads up!
+//
+// We don't use the `.opacity()` mixin here since it causes a bug with text
+// fields in IE7-8. Source: https://github.com/twbs/bootstrap/pull/3552.
+
+.fade {
+  opacity: 0;
+  @include transition(opacity .15s linear);
+  &.in {
+    opacity: 1;
+  }
+}
+
+.collapse {
+  display: none;
+
+  &.in      { display: block; }
+  // [converter] extracted tr&.in to tr.collapse.in
+  // [converter] extracted tbody&.in to tbody.collapse.in
+}
+
+tr.collapse.in    { display: table-row; }
+
+tbody.collapse.in { display: table-row-group; }
+
+.collapsing {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  @include transition-property(height, visibility);
+  @include transition-duration(.35s);
+  @include transition-timing-function(ease);
+}
+
